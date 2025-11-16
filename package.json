@@ -1,0 +1,28 @@
+{
+  "name": "olivaformat",
+  "version": "1.0.0",
+  "description": "Format for Oliva Notebook File Template (.oli)",
+  "homepage": "https://github.com/hum-sc/OlivaFormat#readme",
+  "bugs": {
+    "url": "https://github.com/hum-sc/OlivaFormat/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hum-sc/OlivaFormat.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "src/typesGenerator.ts",
+  "scripts": {
+    "generate-types": "tsc src/typesGenerator.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "json-schema-to-typescript": "^15.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  }
+}

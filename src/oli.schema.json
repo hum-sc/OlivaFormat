@@ -1,0 +1,621 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Oliva Notebook JSON schema ready to extend Jupyter Notebook into pages and sections.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "nbformat_minor", "nbformat", "pages"],
+  "properties": {
+    
+    "metadata": {
+      "description": "Notebook root-level metadata.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "kernelspec": {
+          "description": "Kernel information.",
+          "type": "object",
+          "required": ["name", "display_name"],
+          "properties": {
+            "name": {
+              "description": "Name of the kernel specification.",
+              "type": "string"
+            },
+            "display_name": {
+              "description": "Name to display in UI.",
+              "type": "string"
+            }
+          }
+        },
+        "language_info": {
+          "description": "Kernel information.",
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "description": "The programming language which this kernel runs.",
+              "type": "string"
+            },
+            "codemirror_mode": {
+              "description": "The codemirror mode to use for code in this language.",
+              "oneOf": [{ "type": "string" }, { "type": "object" }]
+            },
+            "file_extension": {
+              "description": "The file extension for files in this language.",
+              "type": "string"
+            },
+            "mimetype": {
+              "description": "The mimetype corresponding to files in this language.",
+              "type": "string"
+            },
+            "pygments_lexer": {
+              "description": "The pygments lexer to use for code in this language.",
+              "type": "string"
+            }
+          }
+        },
+        "orig_nbformat": {
+          "description": "Original notebook format (major number) before converting the notebook between versions. This should never be written to a file.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "description": "The title of the notebook document",
+          "type": "string"
+        },
+        "author": {
+          "description": "The author of the notebook document",
+          "type": "object",
+          "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
+        "id": {
+            "description": "A string field representing the identifier of this particular notebook.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-_]+$",
+            "minLength": 1,
+            "maxLength": 64
+        },
+        "paper":{
+            "description":"Paper for the notebook",
+            "type":"object",
+            "properties":{
+                "dimensions": {
+                    "description":"Size of the notebook pages in milimeters",
+                    "type":"object",
+                    "enum":[
+                      {"name":"A0","width":841,"height":1189},
+                      {"name":"A1","width":594,"height":841},
+                      {"name":"A2","width":420,"height":594},
+                      {"name":"A3","width":297,"height":420},
+                      {"name":"A4","width":210,"height":297},
+                      {"name":"A5","width":148,"height":210},
+                      {"name":"A6","width":105,"height":148},
+                      {"name":"Letter","width":216,"height":279},
+                      {"name":"Legal","width":216,"height":356},
+                      {"name":"Tabloid","width":279,"height":432},
+                      {"name":"Ledger","width":432,"height":279},
+                      {"name":"B0","width":1000,"height":1414},
+                      {"name":"B1","width":707,"height":1000},
+                      {"name":"B2","width":500,"height":707},
+                      {"name":"B3","width":353,"height":500},
+                      {"name":"B4","width":250,"height":353},
+                      {"name":"B5","width":176,"height":250},
+                      {"name":"B6","width":125,"height":176}
+                    ]
+                },
+                "orientation":{
+                    "description":"Orientation of the notebook pages",
+                    "type":"string",
+                    "enum":["portrait","landscape"]
+                }
+            }
+        },
+        "base_font_size":{
+          "description": "Base font size for the notebook",
+          "type": "number",
+          "minimum": 1,
+          "default": 12
+        },
+        "body_font_family": {
+          "description": "Font family for the body text of the notebook",
+          "type": "object",
+          "required": ["name", "generic_family"],
+          "properties": {
+            "name": {
+              "description": "Name of the font family",
+              "type": "string"
+            },
+            "generic_family": {
+              "description": "Generic font family (e.g., serif, sans-serif, monospace)",
+              "type": "string",
+              "enum": ["serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui"]
+            },
+            "url": {
+              "description": "URL to load the font from",
+              "type": "string",
+              "format": "uri"
+            }
+
+          }
+        },
+        "header_font_family": {
+          "description": "Font family for the headers of the notebook",
+          "type": "object",
+          "required": ["name", "generic_family"],
+          "properties": {
+            "name": {
+              "description": "Name of the font family",
+              "type": "string"
+            },
+            "generic_family": {
+              "description": "Generic font family (e.g., serif, sans-serif, monospace)",
+              "type": "string",
+              "enum": ["serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui"]
+            },
+            "url": {
+              "description": "URL to load the font from",
+              "type": "string",
+              "format": "uri"
+            }
+
+          }
+        }
+      }     
+    },
+    "nbformat_minor": {
+      "description": "Notebook format (minor number). Incremented for backward compatible changes to the notebook format.",
+      "type": "integer",
+      "minimum": 5
+    },
+    "nbformat": {
+      "description": "Notebook format (major number). Incremented between backwards incompatible changes to the notebook format.",
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 4
+    },
+    "pages":{
+        "description": "Array of pages in the current notebook",
+        "type":"array",
+        "items": {"$ref":"#/definitions/page"}
+    }
+  },
+
+  "definitions": {
+    "page_id": {
+      "description": "A string field representing the identifier of this particular page.",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-_]+$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+
+    "page":{
+        "description":"A page in the Cornell Notebook",
+        "type":"object",
+        "additionalProperties": false,
+        "required":["id","cue_cells","content_cells", "summary_cells"],
+        "properties": {
+            "id":{ "$ref": "#/definitions/page_id" },
+            "cue":{
+                "description": "Array of cells of cue section of the current page of the current notebook",
+                "type": "object",
+                "$ref": "#/definitions/section"
+            },
+            "content": {
+                "description": "Array of cells of content section of the current page of the current notebook",
+                "type": "object",
+                "$ref": "#/definitions/section"
+            },
+            "summary": {
+                "description": "Array of cells of summary section of the current page of the current notebook",
+                "type": "object",
+                "$ref": "#/definitions/section"
+            }
+        }
+    },
+    "section": {
+      "description": "A section in the Oliva Notebook page",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name","columns", "rows","cells"],
+      "properties": {
+        "name": {
+          "description": "Name of the section",
+          "type": "string"
+        },
+        "cells": {
+          "description": "Array of cells in the current section of the current page of the current notebook",
+          "type": "array",
+          "items": { "$ref": "#/definitions/cell" }
+        },
+        "columns":{
+          "description": "Columns used of the page layout",
+          "type":"integer",
+          "minimum":1
+        },
+        "rows":{
+          "description": "Rows used of the page layout",
+          "type":"integer",
+          "minimum":1
+        }
+      }
+    },
+
+    "cell_id": {
+      "description": "A string field representing the identifier of this particular cell.",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-_]+$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+
+    "cell": {
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/definitions/raw_cell" },
+        { "$ref": "#/definitions/markdown_cell" },
+        { "$ref": "#/definitions/code_cell" }
+      ]
+    },
+
+    "raw_cell": {
+      "description": "Notebook raw nbconvert cell.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "cell_type", "metadata", "source"],
+      "properties": {
+        "id": { "$ref": "#/definitions/cell_id" },
+        "cell_type": {
+          "description": "String identifying the type of cell.",
+          "enum": ["raw"]
+        },
+        "metadata": {
+          "description": "Cell-level metadata.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "format": {
+              "description": "Raw cell metadata format for nbconvert.",
+              "type": "string"
+            },
+            "jupyter": {
+              "description": "Official Jupyter Metadata for Raw Cells",
+              "type": "object",
+              "additionalProperties": true,
+              "source_hidden": {
+                "description": "Whether the source is hidden.",
+                "type": "boolean"
+              }
+            },
+            "name": { "$ref": "#/definitions/misc/metadata_name" },
+            "tags": { "$ref": "#/definitions/misc/metadata_tags" }
+          }
+        },
+        "attachments": { "$ref": "#/definitions/misc/attachments" },
+        "source": { "$ref": "#/definitions/misc/source" }
+      }
+    },
+
+    "markdown_cell": {
+      "description": "Notebook markdown cell.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "cell_type", "metadata", "source"],
+      "properties": {
+        "id": { "$ref": "#/definitions/cell_id" },
+        "cell_type": {
+          "description": "String identifying the type of cell.",
+          "enum": ["markdown"]
+        },
+        "metadata": {
+          "description": "Cell-level metadata.",
+          "type": "object",
+          "properties": {
+            "name": { "$ref": "#/definitions/misc/metadata_name" },
+            "tags": { "$ref": "#/definitions/misc/metadata_tags" },
+            "jupyter": {
+              "description": "Official Jupyter Metadata for Markdown Cells",
+              "type": "object",
+              "additionalProperties": true,
+              "source_hidden": {
+                "description": "Whether the source is hidden.",
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "attachments": { "$ref": "#/definitions/misc/attachments" },
+        "source": { "$ref": "#/definitions/misc/source" }
+      }
+    },
+
+    "code_cell": {
+      "description": "Notebook code cell.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "cell_type",
+        "metadata",
+        "source",
+        "outputs",
+        "execution_count"
+      ],
+      "properties": {
+        "id": { "$ref": "#/definitions/cell_id" },
+        "cell_type": {
+          "description": "String identifying the type of cell.",
+          "enum": ["code"]
+        },
+        "metadata": {
+          "description": "Cell-level metadata.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "jupyter": {
+              "description": "Official Jupyter Metadata for Code Cells",
+              "type": "object",
+              "additionalProperties": true,
+              "source_hidden": {
+                "description": "Whether the source is hidden.",
+                "type": "boolean"
+              },
+              "outputs_hidden": {
+                "description": "Whether the outputs are hidden.",
+                "type": "boolean"
+              }
+            },
+            "execution": {
+              "description": "Execution time for the code in the cell. This tracks time at which messages are received from iopub or shell channels",
+              "type": "object",
+              "properties": {
+                "iopub.execute_input": {
+                  "description": "header.date (in ISO 8601 format) of iopub channel's execute_input message. It indicates the time at which the kernel broadcasts an execute_input message to connected frontends",
+                  "type": "string"
+                },
+                "iopub.status.busy": {
+                  "description": "header.date (in ISO 8601 format) of iopub channel's kernel status message when the status is 'busy'",
+                  "type": "string"
+                },
+                "shell.execute_reply": {
+                  "description": "header.date (in ISO 8601 format) of the shell channel's execute_reply message. It indicates the time at which the execute_reply message was created",
+                  "type": "string"
+                },
+                "iopub.status.idle": {
+                  "description": "header.date (in ISO 8601 format) of iopub channel's kernel status message when the status is 'idle'. It indicates the time at which kernel finished processing the associated request",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true,
+              "patternProperties": {
+                "^.*$": {
+                  "type": "string"
+                }
+              }
+            },
+            "collapsed": {
+              "description": "Whether the cell's output is collapsed/expanded.",
+              "type": "boolean"
+            },
+            "scrolled": {
+              "description": "Whether the cell's output is scrolled, unscrolled, or autoscrolled.",
+              "enum": [true, false, "auto"]
+            },
+            "name": { "$ref": "#/definitions/misc/metadata_name" },
+            "tags": { "$ref": "#/definitions/misc/metadata_tags" }
+          }
+        },
+        "source": { "$ref": "#/definitions/misc/source" },
+        "outputs": {
+          "description": "Execution, display, or stream outputs.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/output" }
+        },
+        "execution_count": {
+          "description": "The code cell's prompt number. Will be null if the cell has not been run.",
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      }
+    },
+
+    "unrecognized_cell": {
+      "description": "Unrecognized cell from a future minor-revision to the notebook format.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["cell_type", "metadata"],
+      "properties": {
+        "cell_type": {
+          "description": "String identifying the type of cell.",
+          "not": {
+            "enum": ["markdown", "code", "raw"]
+          }
+        },
+        "metadata": {
+          "description": "Cell-level metadata.",
+          "type": "object",
+          "properties": {
+            "name": { "$ref": "#/definitions/misc/metadata_name" },
+            "tags": { "$ref": "#/definitions/misc/metadata_tags" }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+
+    "output": {
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/definitions/execute_result" },
+        { "$ref": "#/definitions/display_data" },
+        { "$ref": "#/definitions/stream" },
+        { "$ref": "#/definitions/error" }
+      ]
+    },
+
+    "execute_result": {
+      "description": "Result of executing a code cell.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["output_type", "data", "metadata", "execution_count"],
+      "properties": {
+        "output_type": {
+          "description": "Type of cell output.",
+          "enum": ["execute_result"]
+        },
+        "execution_count": {
+          "description": "A result's prompt number.",
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "data": { "$ref": "#/definitions/misc/mimebundle" },
+        "metadata": { "$ref": "#/definitions/misc/output_metadata" }
+      }
+    },
+
+    "display_data": {
+      "description": "Data displayed as a result of code cell execution.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["output_type", "data", "metadata"],
+      "properties": {
+        "output_type": {
+          "description": "Type of cell output.",
+          "enum": ["display_data"]
+        },
+        "data": { "$ref": "#/definitions/misc/mimebundle" },
+        "metadata": { "$ref": "#/definitions/misc/output_metadata" }
+      }
+    },
+
+    "stream": {
+      "description": "Stream output from a code cell.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["output_type", "name", "text"],
+      "properties": {
+        "output_type": {
+          "description": "Type of cell output.",
+          "enum": ["stream"]
+        },
+        "name": {
+          "description": "The name of the stream (stdout, stderr).",
+          "type": "string"
+        },
+        "text": {
+          "description": "The stream's text output, represented as an array of strings.",
+          "$ref": "#/definitions/misc/multiline_string"
+        }
+      }
+    },
+
+    "error": {
+      "description": "Output of an error that occurred during code cell execution.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["output_type", "ename", "evalue", "traceback"],
+      "properties": {
+        "output_type": {
+          "description": "Type of cell output.",
+          "enum": ["error"]
+        },
+        "ename": {
+          "description": "The name of the error.",
+          "type": "string"
+        },
+        "evalue": {
+          "description": "The value, or message, of the error.",
+          "type": "string"
+        },
+        "traceback": {
+          "description": "The error's traceback, represented as an array of strings.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "unrecognized_output": {
+      "description": "Unrecognized output from a future minor-revision to the notebook format.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["output_type"],
+      "properties": {
+        "output_type": {
+          "description": "Type of cell output.",
+          "not": {
+            "enum": ["execute_result", "display_data", "stream", "error"]
+          }
+        }
+      }
+    },
+
+    "misc": {
+      "metadata_name": {
+        "description": "The cell's name. If present, must be a non-empty string. Cell names are expected to be unique across all the cells in a given notebook. This criterion cannot be checked by the json schema and must be established by an additional check.",
+        "type": "string",
+        "pattern": "^.+$"
+      },
+      "metadata_tags": {
+        "description": "The cell's tags. Tags must be unique, and must not contain commas.",
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "pattern": "^[^,]+$"
+        }
+      },
+      "attachments": {
+        "description": "Media attachments (e.g. inline images), stored as mimebundle keyed by filename.",
+        "type": "object",
+        "patternProperties": {
+          ".*": {
+            "description": "The attachment's data stored as a mimebundle.",
+            "$ref": "#/definitions/misc/mimebundle"
+          }
+        }
+      },
+      "source": {
+        "description": "Contents of the cell, represented as an array of lines.",
+        "$ref": "#/definitions/misc/multiline_string"
+      },
+      "execution_count": {
+        "description": "The code cell's prompt number. Will be null if the cell has not been run.",
+        "type": ["integer", "null"],
+        "minimum": 0
+      },
+      "mimebundle": {
+        "description": "A mime-type keyed dictionary of data",
+        "type": "object",
+        "additionalProperties": {
+          "description": "mimetype output (e.g. text/plain), represented as either an array of strings or a string.",
+          "$ref": "#/definitions/misc/multiline_string"
+        },
+        "patternProperties": {
+          "^application/(.*\\+)?json$": {
+            "description": "Mimetypes with JSON output, can be any type"
+          }
+        }
+      },
+      "output_metadata": {
+        "description": "Cell output metadata.",
+        "type": "object",
+        "additionalProperties": true
+      },
+      "multiline_string": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        ]
+      }
+    }
+  }
+}
