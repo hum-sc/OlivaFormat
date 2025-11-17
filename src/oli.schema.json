@@ -68,7 +68,11 @@
           "properties": {
               "name": {
                 "type": "string"
+              },
+              "id": {
+                "type": "string"
               }
+
             },
             "additionalProperties": true
           },
@@ -163,6 +167,70 @@
             }
 
           }
+        },
+        "page_layout": {
+          "description": "Layout settings for the notebook pages",
+          "type": "object",
+          "properties": {
+            "columns": {
+              "description": "Number of columns in the page layout",
+              "type": "integer",
+              "minimum": 1
+            },
+            "rows": {
+              "description": "Number of rows in the page layout",
+              "type": "integer",
+              "minimum": 1
+            },
+            "cue_section": {
+              "description": "Layout settings for the cue section",
+              "type": "object",
+              "properties": {
+                "columns": {
+                  "description": "Number of columns in the cue section",
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "rows": {
+                  "description": "Number of rows in the cue section",
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "summary_section": {
+              "description": "Layout settings for the summary section",
+              "type": "object",
+              "properties": {
+                "columns": {
+                  "description": "Number of columns in the summary section",
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "rows": {
+                  "description": "Number of rows in the summary section",
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content_section": {
+              "description": "Layout settings for the content section",
+              "type": "object",
+              "properties": {
+                "columns": {
+                  "description": "Number of columns in the content section",
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "rows": {
+                  "description": "Number of rows in the content section",
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
         }
       }     
     },
@@ -231,16 +299,6 @@
           "description": "Array of cells in the current section of the current page of the current notebook",
           "type": "array",
           "items": { "$ref": "#/definitions/cell" }
-        },
-        "columns":{
-          "description": "Columns used of the page layout",
-          "type":"integer",
-          "minimum":1
-        },
-        "rows":{
-          "description": "Rows used of the page layout",
-          "type":"integer",
-          "minimum":1
         }
       }
     },
@@ -330,7 +388,12 @@
           "additionalProperties": true
         },
         "attachments": { "$ref": "#/definitions/misc/attachments" },
-        "source": { "$ref": "#/definitions/misc/source" }
+        "source": { "$ref": "#/definitions/misc/source" },
+        "size":{
+          "description": "Size of the markdown cell in the notebook in mm",
+          "type": "number",
+          "minimum": 0
+        }
       }
     },
 

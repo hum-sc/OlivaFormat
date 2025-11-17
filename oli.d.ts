@@ -85,6 +85,7 @@ export interface Oli {
      */
     author?: {
       name?: string;
+      id?: string;
       [k: string]: unknown;
     };
     /**
@@ -145,8 +146,48 @@ export interface Oli {
       url?: string;
       [k: string]: unknown;
     };
-    /**
-     * Font family for the headers of the notebook
+    page_layout: {
+      /**
+       * Number of columns per page
+       */
+      columns: number;
+      /**
+       * Number of rows per page
+       */
+      rows: number;
+      cue_section: {
+        /**
+         * Number of columns for the cue section
+         */
+        columns: number;
+        /**
+         * Number of rows for the cue section
+         */
+        rows: number;
+      };
+      summary_section: {
+        /**
+         * Number of columns for the summary section
+         */
+        columns: number;
+        /**
+         * Number of rows for the summary section
+         */
+        rows: number;
+      };
+      content_section: {
+        /**
+         * Number of columns for the content section
+         */
+        columns: number;
+        /**
+         * Number of rows for the content section
+         */
+        rows: number;
+      };
+    };
+      /**
+       * Font family for the headers of the notebook
      */
     header_font_family?: {
       /**
@@ -184,8 +225,8 @@ export interface Oli {
 export interface Page {
   id: PageId;
   cue?: Section;
-  content?: Section1;
-  summary?: Section2;
+  content?: Section;
+  summary?: Section;
 }
 /**
  * Array of cells of cue section of the current page of the current notebook
@@ -202,11 +243,6 @@ export interface Section {
   /**
    * Columns used of the page layout
    */
-  columns: number;
-  /**
-   * Rows used of the page layout
-   */
-  rows: number;
 }
 /**
  * Notebook raw nbconvert cell.
@@ -293,6 +329,10 @@ export interface MarkdownCell {
    * Contents of the cell, represented as an array of lines.
    */
   source: string | string[];
+  /**
+   * Size of the markdown cell in the notebook in mm
+   */
+  size: number;                         
 }
 /**
  * Notebook code cell.
@@ -457,11 +497,6 @@ export interface Section1 {
   /**
    * Columns used of the page layout
    */
-  columns: number;
-  /**
-   * Rows used of the page layout
-   */
-  rows: number;
 }
 /**
  * Array of cells of summary section of the current page of the current notebook
