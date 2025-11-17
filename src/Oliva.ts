@@ -279,6 +279,29 @@ export default class NotebookOliva implements Oli {
         return notebook;
     }
 
+    static notebookFromString(data: string): NotebookOliva {
+        const obj = JSON.parse(data) as Oli;
+        const notebook = new NotebookOliva(
+            obj.metadata.id!,
+            obj.metadata.title,
+            obj.metadata.author!.name!,
+            obj.metadata.author!.id!,
+            obj.metadata.paper!.dimensions!,
+            obj.metadata.paper!.orientation!,
+            obj.metadata.base_font_size!,
+            obj.metadata.body_font_family!,
+            obj.metadata.headerfont!,
+            obj.metadata.page_layout.columns!,
+            obj.metadata.page_layout.rows!,
+            obj.metadata.page_layout.cue_section!.columns!,
+            obj.metadata.page_layout.summary_section!.rows!,
+        );
+        notebook.pages = obj.pages;
+        notebook.nbformat = obj.nbformat;
+        notebook.nbformat_minor = obj.nbformat_minor;
+        return notebook;
+    }
+
     writeToFile(path: string): void {
         const oliNotebook: Oli = {
             metadata: this.metadata,
@@ -289,6 +312,7 @@ export default class NotebookOliva implements Oli {
         const data = JSON.stringify(oliNotebook, null, 2);
         fs.writeFileSync(path, data, 'utf-8');
     }
+    
     serialize(): string {
         const oliNotebook: Oli = {
             metadata: this.metadata,
