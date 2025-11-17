@@ -289,6 +289,16 @@ export default class NotebookOliva implements Oli {
         const data = JSON.stringify(oliNotebook, null, 2);
         fs.writeFileSync(path, data, 'utf-8');
     }
+    serialize(): string {
+        const oliNotebook: Oli = {
+            metadata: this.metadata,
+            pages: this.pages,
+            nbformat: this.nbformat,
+            nbformat_minor: this.nbformat_minor,
+        };
+        return JSON.stringify(oliNotebook, null, 2);
+    }
+    
     changeDimensions(width: number, height: number, name?: string, orientation?: 'portrait' | 'landscape'): void {
         this.metadata.paper!.dimensions = { name: name || this.metadata.paper!.dimensions!.name, width, height };
         if (orientation) {
