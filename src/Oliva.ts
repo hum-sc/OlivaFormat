@@ -53,10 +53,22 @@ export default class NotebookOliva implements Oli {
             url: 'https://fonts.googleapis.com/css2?family=Work+Sans&display=swap',
             generic_family: 'sans-serif',
         },
-        pageColumns: number = 3,
-        pageRows: number = 4,
-        cueColumns: number = 1,
-        summaryRows: number = 1,
+        pageLayout: Metadata['page_layout'] = {
+            columns: 3,
+            rows: 6,
+            cue_section: {
+                columns: 1,
+                rows: 5,
+            },
+            summary_section: {
+                columns: 3,
+                rows: 1,
+            },
+            content_section: {
+                columns: 2,
+                rows: 5,
+            }
+        },
         createdAt: string = new Date().toISOString(),
         updatedAt: string = new Date().toISOString(),
         minSizeCell: number = 10, //In mm
@@ -75,23 +87,7 @@ export default class NotebookOliva implements Oli {
             id: id,
             created_at: createdAt,
             updated_at: updatedAt,
-            page_layout:{
-                columns: pageColumns,
-                rows: pageRows,
-                cue_section:{
-                    columns: cueColumns,
-                    rows: pageRows-summaryRows,
-                },
-                summary_section:{
-                    columns: pageColumns,
-                    rows: summaryRows,
-                },
-                content_section:{
-                    columns: pageColumns - cueColumns,
-                    rows: pageRows - summaryRows,
-                }
-            }
-            
+            page_layout: pageLayout,
         };
         
         this.pages = [{...this.blankPageTemplate, id: 'page-0' }];
@@ -275,10 +271,7 @@ export default class NotebookOliva implements Oli {
             jsonData.metadata.base_font_size!,
             jsonData.metadata.body_font_family!,
             jsonData.metadata.header_font_family!,
-            jsonData.metadata.page_layout.columns!,
-            jsonData.metadata.page_layout.rows!,
-            jsonData.metadata.page_layout.cue_section!.columns!,
-            jsonData.metadata.page_layout.summary_section!.rows!,
+            jsonData.metadata.page_layout!,
             jsonData.metadata.created_at!,
             jsonData.metadata.updated_at!,
             10 // default minSizeCell
