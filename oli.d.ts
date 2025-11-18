@@ -204,6 +204,8 @@ export interface Oli {
       url?: string;
       [k: string]: unknown;
     };
+    created_at?: string;
+    updated_at?: string;
     [k: string]: unknown;
   };
   /**

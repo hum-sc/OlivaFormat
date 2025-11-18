@@ -72,8 +72,8 @@ export default class NotebookOliva implements Oli {
             header_font_family: headerFontFamily,
             body_font_family: bodyFontFamily,
             id: id,
-            created: new Date().toISOString(),
-            modified: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
             page_layout:{
                 columns: pageColumns,
                 rows: pageRows,
