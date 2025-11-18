@@ -55,6 +55,8 @@ export default class NotebookOliva implements Oli {
         pageRows: number = 4,
         cueColumns: number = 1,
         summaryRows: number = 1,
+        createdAt: string = new Date().toISOString(),
+        updatedAt: string = new Date().toISOString(),
         minSizeCell: number = 10, //In mm
     ){
         this.minSizeCell = minSizeCell;
@@ -72,8 +74,8 @@ export default class NotebookOliva implements Oli {
             header_font_family: headerFontFamily,
             body_font_family: bodyFontFamily,
             id: id,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
+            created_at: createdAt,
+            updated_at: updatedAt,
             page_layout:{
                 columns: pageColumns,
                 rows: pageRows,
@@ -294,6 +296,7 @@ export default class NotebookOliva implements Oli {
             obj.metadata.page_layout.rows!,
             obj.metadata.page_layout.cue_section!.columns!,
             obj.metadata.page_layout.summary_section!.rows!,
+            
         );
         notebook.pages = obj.pages;
         notebook.nbformat = obj.nbformat;
