@@ -79,12 +79,12 @@ export interface Oli {
     /**
      * The title of the notebook document
      */
-    title?: string;
+    title: string;
     /**
      * The author of the notebook document
      */
-    author?: {
-      name?: string;
+    author: {
+      name: string;
       id?: string;
       [k: string]: unknown;
     };
@@ -95,11 +95,11 @@ export interface Oli {
     /**
      * Paper for the notebook
      */
-    paper?: {
+    paper: {
       /**
        * Size of the notebook pages in milimeters
        */
-      dimensions?: {"name":"A0","width":841,"height":1189}|
+      dimensions: {"name":"A0","width":841,"height":1189}|
                       {"name":"A1","width":594,"height":841}|
                       {"name":"A2","width":420,"height":594}|
                       {"name":"A3","width":297,"height":420}|
@@ -121,17 +121,17 @@ export interface Oli {
       /**
        * Orientation of the notebook pages
        */
-      orientation?: "portrait" | "landscape";
+      orientation: "portrait" | "landscape";
       [k: string]: unknown;
     };
     /**
      * Base font size for the notebook
      */
-    base_font_size?: number;
+    base_font_size: number;
     /**
      * Font family for the body text of the notebook
      */
-    body_font_family?: {
+    body_font_family: {
       /**
        * Name of the font family
        */
@@ -143,9 +143,12 @@ export interface Oli {
       /**
        * URL to load the font from
        */
-      url?: string;
+      url: string;
       [k: string]: unknown;
     };
+    /**
+     * Layout of the notebook pages
+     */
     page_layout: {
       /**
        * Number of columns per page
@@ -189,7 +192,7 @@ export interface Oli {
       /**
        * Font family for the headers of the notebook
      */
-    header_font_family?: {
+    header_font_family: {
       /**
        * Name of the font family
        */
@@ -204,8 +207,18 @@ export interface Oli {
       url?: string;
       [k: string]: unknown;
     };
-    created_at?: string;
-    updated_at?: string;
+    /**
+     * Timestamp for notebook creation
+     */
+    created_at: string;
+    /**
+     * Timestamp for last notebook update
+     */
+    updated_at: string;
+    /**
+     * URI for the notebook resource
+    */
+    uri?: string;
     [k: string]: unknown;
   };
   /**
