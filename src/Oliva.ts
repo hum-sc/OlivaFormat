@@ -1,5 +1,8 @@
 import type {Cell, MarkdownCell, Oli, Page} from '../oli.d.ts';
 import * as fs from 'fs';
+
+export type Metadata = Oli['metadata'];
+
 export default class NotebookOliva implements Oli {
     public metadata: Oli['metadata'];
     public pages: Page[];
