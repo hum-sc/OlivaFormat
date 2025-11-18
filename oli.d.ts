@@ -219,6 +219,7 @@ export interface Oli {
      * URI for the notebook resource
     */
     uri?: string;
+    min_size_cell?: number;
     [k: string]: unknown;
   };
   /**
