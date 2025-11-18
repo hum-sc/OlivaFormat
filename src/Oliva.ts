@@ -258,50 +258,12 @@ export default class NotebookOliva implements Oli {
     }
     static notebookFromFile(path: string): NotebookOliva {
         const file = fs.readFileSync(path, 'utf-8');
-        const obj = JSON.parse(file) as Oli;
-        const notebook = new NotebookOliva(
-            obj.metadata.id!,
-            obj.metadata.title,
-            obj.metadata.author!.name!,
-            obj.metadata.author!.id!,
-            obj.metadata.paper!.dimensions!,
-            obj.metadata.paper!.orientation!,
-            obj.metadata.base_font_size!,
-            obj.metadata.body_font_family!,
-            obj.metadata.header_font_family!,
-            obj.metadata.page_layout.columns!,
-            obj.metadata.page_layout.rows!,
-            obj.metadata.page_layout.cue_section!.columns!,
-            obj.metadata.page_layout.summary_section!.rows!,
-        );
-        notebook.pages = obj.pages;
-        notebook.nbformat = obj.nbformat;
-        notebook.nbformat_minor = obj.nbformat_minor;
-        return notebook;
+        return this.notebookFromString(file);
     }
 
     static notebookFromString(data: string): NotebookOliva {
         const obj = JSON.parse(data) as Oli;
-        const notebook = new NotebookOliva(
-            obj.metadata.id!,
-            obj.metadata.title,
-            obj.metadata.author!.name!,
-            obj.metadata.author!.id!,
-            obj.metadata.paper!.dimensions!,
-            obj.metadata.paper!.orientation!,
-            obj.metadata.base_font_size!,
-            obj.metadata.body_font_family!,
-            obj.metadata.header_font_family!,
-            obj.metadata.page_layout.columns!,
-            obj.metadata.page_layout.rows!,
-            obj.metadata.page_layout.cue_section!.columns!,
-            obj.metadata.page_layout.summary_section!.rows!,
-            
-        );
-        notebook.pages = obj.pages;
-        notebook.nbformat = obj.nbformat;
-        notebook.nbformat_minor = obj.nbformat_minor;
-        return notebook;
+        return this.notebookFromJSON(obj);
     }
 
     static notebookFromJSON(jsonData: Oli): NotebookOliva {
@@ -319,6 +281,9 @@ export default class NotebookOliva implements Oli {
             jsonData.metadata.page_layout.rows!,
             jsonData.metadata.page_layout.cue_section!.columns!,
             jsonData.metadata.page_layout.summary_section!.rows!,
+            jsonData.metadata.created_at!,
+            jsonData.metadata.updated_at!,
+            10 // default minSizeCell
         );
         notebook.pages = jsonData.pages;
         notebook.nbformat = jsonData.nbformat;
