@@ -333,6 +333,9 @@ export default class NotebookOliva implements Oli {
         const data = JSON.stringify(oliNotebook, null, 2);
         fs.writeFileSync(path, data, 'utf-8');
     }
+    setUpdatedAt(date: Date): void {
+        this.metadata.updated_at = date.toISOString();
+    }
     
     serialize(): string {
         const oliNotebook: Oli = {
