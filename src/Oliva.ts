@@ -41,8 +41,7 @@ export default class NotebookOliva implements Oli {
         title: string = "Libreta sin título",
         authorName: string,
         authorId: string="",
-        paperDimensions: { name: string; width: number; height: number } = { name: 'A4', width: 210, height: 297 },
-        orientation: 'portrait' | 'landscape' = 'portrait',
+        paper:{dimensions:{ name: string; width: number; height: number }, orientation: 'portrait' | 'landscape' } = { dimensions: { name: 'A4', width: 210, height: 297 }, orientation: 'portrait' },
         basefontSize: number = 12,
         bodyFontFamily: Oli['metadata']['body_font_family'] = {
             name: 'Inter',
@@ -69,10 +68,7 @@ export default class NotebookOliva implements Oli {
                 name: authorName,
                 id: authorId,
             },
-            paper:{
-                dimensions: paperDimensions,
-                orientation: orientation
-            },
+            paper:paper,
             base_font_size: basefontSize,
             header_font_family: headerFontFamily,
             body_font_family: bodyFontFamily,
@@ -275,8 +271,7 @@ export default class NotebookOliva implements Oli {
             jsonData.metadata.title,
             jsonData.metadata.author!.name!,
             jsonData.metadata.author!.id!,
-            jsonData.metadata.paper!.dimensions!,
-            jsonData.metadata.paper!.orientation!,
+            jsonData.metadata.paper!,
             jsonData.metadata.base_font_size!,
             jsonData.metadata.body_font_family!,
             jsonData.metadata.header_font_family!,
