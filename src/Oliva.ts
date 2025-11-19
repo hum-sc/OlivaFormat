@@ -312,14 +312,19 @@ export default class NotebookOliva implements Oli {
     setUpdatedAt(date: Date): void {
         this.metadata.updated_at = date.toISOString();
     }
-    
-    serialize(): string {
+
+    oli():Oli {
         const oliNotebook: Oli = {
             metadata: this.metadata,
             pages: this.pages,
             nbformat: this.nbformat,
             nbformat_minor: this.nbformat_minor,
         };
+        return oliNotebook;
+    }
+    
+    serialize(): string {
+        const oliNotebook: Oli = this.oli();
         return JSON.stringify(oliNotebook, null, 2);
     }
     
